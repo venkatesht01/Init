@@ -24,7 +24,8 @@ function AppPro(): JSX.Element{
 const styles = StyleSheet.create({
     container: {
         flex:1,
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     whiteText: {
         color: '#FFFFFF'
