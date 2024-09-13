@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Image, FlatList, StyleSheet, SafeAreaView } from 'react-native';
 import JobCard from '../components/JobCard';
+import { Searchbar } from 'react-native-paper';
 
 // Import the local image
 import profileImage from '../images/profile.png';
@@ -19,6 +20,20 @@ const user = {
 };
 
 const HomePage = () => {
+  const [searchQuery, setSearchQuery] = React.useState('');
+
+  // Function to filter job applications based on the search query
+  const filterApplications = () => {
+    if (!searchQuery) {
+      return recentApplications; // Return all items if no search query
+    }
+
+    return recentApplications.filter(item =>
+      item.jobTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.companyName.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.welcomeSection}>
@@ -27,8 +42,16 @@ const HomePage = () => {
       </View>
       <View style={styles.applicationsSection}>
         <Text style={styles.applicationsHeader}>Recent Applications</Text>
+
+        <Searchbar
+          placeholder="Search"
+          onChangeText={setSearchQuery}
+          value={searchQuery}
+          style={styles.Searchbar}
+        />
+
         <FlatList
-          data={recentApplications}
+          data={filterApplications()} // Use the filtered list
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <JobCard
@@ -74,6 +97,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 8,
   },
+  Searchbar:{
+    marginBottom: 20,
+    marginTop: 10,
+    width: "100%"
+  }
 });
 
 export default HomePage;
