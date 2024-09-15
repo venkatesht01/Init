@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 const commonStyles = StyleSheet.create({
   container: {
@@ -27,22 +27,24 @@ const commonStyles = StyleSheet.create({
     fontSize: 16,
   },
   buttonContainer: {
-    flexDirection: 'row',
-    marginTop: 70,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     width: '90%',
-    justifyContent: 'flex-end',
+    height: 20,
+    backgroundColor: 'blue',
   },
   buttonText: {
-    color: '#262626',
-    fontSize: 25,
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
-  linearGradient: {
-    height: 34,
-    width: 56,
-    borderRadius: 17,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginHorizontal: 10,
+  button: {
+    backgroundColor: '#4CAF50',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
   },
   footerText: {
     color: '#262626',
