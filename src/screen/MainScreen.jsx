@@ -2,7 +2,6 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import  { useEffect, useRef } from 'react';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Button, Alert } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon, { Icons } from '../components/Icons';
 import * as Animatable from 'react-native-animatable';
 import Colors from '../constants/Colors';
@@ -117,3 +116,4 @@ const styles = StyleSheet.create({
 
 
 export default MainScreen;
+

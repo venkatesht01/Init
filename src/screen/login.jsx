@@ -1,105 +1,234 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import LinearGradient from 'react-native-linear-gradient';
+import React, {useState} from 'react';
+import {
+  StyleSheet,
+  SafeAreaView,
+  View,
+  Image,
+  Alert,
+  Text,
+  TouchableOpacity,
+  TextInput,
+} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {jwtDecode} from 'jwt-decode';
+import {useNavigation} from '@react-navigation/native';
+import config from '../utils/config';
 import axios from 'axios';
-import InputField from '../components/InputField'; // Import InputField
-import commonStyles from '../styles/commonStyles'; // Import common styles
-import config from '../utils/config'; // Import config
 
-const Login = ({ navigation }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+export default function Example() {
+  const [form, setForm] = useState({
+    email: '',
+    password: '',
+  });
+  const navigation = useNavigation();
 
   const handleLogin = async () => {
-    if (!email || !password) {
-      Alert.alert('Error', 'Email and password are required');
+    const loginUrl = config.apiBaseUrl + '/auth/login';
+
+    if (!form.email || !form.password) {
+      Alert.alert('Error', 'Please fill in all fields.');
       return;
     }
 
     try {
-      const response = await axios.post(`${config.apiBaseUrl}/auth/login`, {
-        email,
-        password,
+      const response = await axios.post(loginUrl, {
+        email: form.email,
+        password: form.password,
       });
+      const {token} = response.data;
+      await AsyncStorage.setItem('jwtToken', token);
+      const decoded = jwtDecode(token);
+      const {role} = decoded;
 
-       // Store the token in AsyncStorage
-       // eslint-disable-next-line no-undef
-       //await AsyncStorage.setItem('userToken', response.data.token);
-
-       // Navigate to MainScreen
-       navigation.navigate('MainScreen');
-
-      // Handle successful login
-      Alert.alert('Success', response.data.message);
-      // Store the token, navigate to another screen, etc.
-      console.log('Token:', response.data.token);
+      console.log(decoded);
+      if (role === 'Admin') {
+        navigation.navigate('AdminScreen');
+      } else if (role === 'employee') {
+        navigation.navigate('EmployeeScreen');
+      } else if (role === 'employer') {
+        navigation.navigate('EmployerScreen');
+      } else {
+        Alert.alert('Error', 'Invalid role.');
+      }
     } catch (error) {
-      Alert.alert('Error', error.response ? error.response.data : 'Login failed');
-      console.error(error);
+      Alert.alert(error?.response?.data);
     }
   };
-
   return (
-    <View style={commonStyles.container}>
-      <View style={styles.iconContainer}>
-        <FontAwesome name="handshake-o" size={24} color="#9A9A9A" />
+    <SafeAreaView style={{flex: 1, backgroundColor: '#e8ecf4'}}>
+      <View style={styles.container}>
+        <KeyboardAwareScrollView>
+          <View style={styles.header}>
+            {/* <Image
+              alt="App Logo"
+              resizeMode="contain"
+              style={styles.headerImg}
+              source={require('../assets/Init_logo.png')}
+            /> */}
+
+            <Text style={styles.title}>
+              Sign in to <Text style={{color: '#075eec'}}>INIT</Text>
+            </Text>
+
+            <Text style={styles.subtitle}>
+              Step into a World of Endless Opportunities
+            </Text>
+          </View>
+
+          <View style={styles.form}>
+            <View style={styles.input}>
+              <Text style={styles.inputLabel}>Email address</Text>
+
+              <TextInput
+                autoCapitalize="none"
+                autoCorrect={false}
+                clearButtonMode="while-editing"
+                keyboardType="email-address"
+                onChangeText={email => setForm({...form, email})}
+                placeholder="john@example.com"
+                placeholderTextColor="#6b7280"
+                style={styles.inputControl}
+                value={form.email}
+              />
+            </View>
+
+            <View style={styles.input}>
+              <Text style={styles.inputLabel}>Password</Text>
+
+              <TextInput
+                autoCorrect={false}
+                clearButtonMode="while-editing"
+                onChangeText={password => setForm({...form, password})}
+                placeholder="********"
+                placeholderTextColor="#6b7280"
+                style={styles.inputControl}
+                secureTextEntry={true}
+                value={form.password}
+              />
+            </View>
+
+            <View style={styles.formAction}>
+              <TouchableOpacity onPress={handleLogin}>
+                <View style={styles.btn}>
+                  <Text style={styles.btnText}>Sign in</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+
+            <Text style={styles.formLink}>Forgot password?</Text>
+          </View>
+        </KeyboardAwareScrollView>
+
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('Signup');
+          }}
+          style={{marginTop: 'auto'}}>
+          <Text style={styles.formFooter}>
+            Don't have an account?{' '}
+            <Text style={{textDecorationLine: 'underline'}}>Sign up</Text>
+          </Text>
+        </TouchableOpacity>
       </View>
-      <Text style={styles.helloText}>Hello</Text>
-      <Text style={styles.signInText}>Sign in to your account.</Text>
-
-      <InputField placeholder="Email" icon="user" value={email} onChangeText={setEmail} />
-      <InputField placeholder="Password" icon="lock" secureTextEntry value={password} onChangeText={setPassword} />
-
-      <Text style={styles.forgotPasswordText}>Forgot your password?</Text>
-
-      <View style={commonStyles.buttonContainer}>
-        <Text style={commonStyles.buttonText} onPress={handleLogin}>Sign in</Text>
-        <LinearGradient colors={['#F97794', '#623AA2']} style={commonStyles.linearGradient}>
-          <AntDesign name="arrowright" size={28} color="white" />
-        </LinearGradient>
-      </View>
-
-      <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
-        <Text style={styles.footerText}>
-          Don't have an account? <Text style={{ textDecorationLine: 'underline' }}>Create</Text>
-        </Text>
-      </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  iconContainer: {
-    alignItems: 'center',
-    marginTop: 80,
-    marginBottom: 20,
+  container: {
+    paddingVertical: 24,
+    paddingHorizontal: 0,
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 0,
   },
-  helloText: {
-    textAlign: 'center',
-    fontSize: 70,
-    fontWeight: '500',
-    color: 'black',
+  title: {
+    fontSize: 31,
+    fontWeight: '700',
+    color: '#1D2A32',
+    marginBottom: 6,
   },
-  signInText: {
-    textAlign: 'center',
-    fontSize: 18,
-    color: 'black',
-    marginBottom: 30,
-  },
-  forgotPasswordText: {
-    color: '#BEBEBE',
-    textAlign: 'right',
-    width: '90%',
+  subtitle: {
     fontSize: 15,
+    fontWeight: '500',
+    color: '#929292',
   },
-  footerText: {
-    color: '#262626',
+  /** Header */
+  header: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 36,
+  },
+  headerImg: {
+    width: 80,
+    height: 80,
+    alignSelf: 'center',
+    marginBottom: 36,
+  },
+  /** Form */
+  form: {
+    marginBottom: 24,
+    paddingHorizontal: 24,
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 0,
+  },
+  formAction: {
+    marginTop: 4,
+    marginBottom: 16,
+  },
+  formLink: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#075eec',
     textAlign: 'center',
+  },
+  formFooter: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#222',
+    textAlign: 'center',
+    letterSpacing: 0.15,
+  },
+  /** Input */
+  input: {
+    marginBottom: 16,
+  },
+  inputLabel: {
+    fontSize: 17,
+    fontWeight: '600',
+    color: '#222',
+    marginBottom: 8,
+  },
+  inputControl: {
+    height: 50,
+    backgroundColor: '#fff',
+    paddingHorizontal: 16,
+    borderRadius: 12,
+    fontSize: 15,
+    fontWeight: '500',
+    color: '#222',
+    borderWidth: 1,
+    borderColor: '#C9D3DB',
+    borderStyle: 'solid',
+  },
+  /** Button */
+  btn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 30,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderWidth: 1,
+    backgroundColor: '#075eec',
+    borderColor: '#075eec',
+  },
+  btnText: {
     fontSize: 18,
-    marginTop: 100,
+    lineHeight: 26,
+    fontWeight: '600',
+    color: '#fff',
   },
 });
-
-export default Login;

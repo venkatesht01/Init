@@ -2,26 +2,10 @@
     "version": "0.2.0",
     "configurations": [
       {
-        "name": "Debug Android",
-        "request": "launch",
-        "type": "reactnative",
-        "platform": "android",
-        "target": "emulator",
-        "sourceMaps": true
-      },
-      {
-        "name": "Debug iOS",
-        "request": "launch",
-        "type": "reactnative",
-        "platform": "ios",
-        "target": "simulator",
-        "sourceMaps": true
-      },
-      {
-        "name": "Attach to packager",
-        "request": "attach",
-        "type": "reactnative",
-        "port": 8081
+        "name" : "Attaach to Hermes Application",
+        "cwd": "${workspaceFolder}",
+        "type": "reactnativedirect",
+        "request": "attach"
       }
     ]
   }
