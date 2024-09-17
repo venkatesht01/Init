@@ -16,7 +16,7 @@ import {useNavigation} from '@react-navigation/native';
 import config from '../utils/config';
 import axios from 'axios';
 
-export default function Example() {
+export default function Login() {
   const [form, setForm] = useState({
     email: '',
     password: '',

@@ -5,7 +5,7 @@ import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Button, Alert }
 import Icon, { Icons } from '../components/Icons';
 import * as Animatable from 'react-native-animatable';
 import Colors from '../constants/Colors';
-import Login from './Login';
+import Login from './login';
 import HomeScreen from './HomeScreen';
 
 const TabArr = [
