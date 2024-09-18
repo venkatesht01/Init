@@ -1,16 +1,41 @@
 import React from 'react';
-import { View, Text, Image, FlatList, StyleSheet, SafeAreaView } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  FlatList,
+  StyleSheet,
+  SafeAreaView,
+} from 'react-native';
 import JobCard from '../components/JobCard';
-import { Searchbar } from 'react-native-paper';
+import {Searchbar} from 'react-native-paper';
 
 // Import the local image
 import profileImage from '../images/profile.png';
 
 // Sample data for recent job applications
 const recentApplications = [
-  { id: '1', jobTitle: 'Software Engineer', companyName: 'Tech Corp', salary: '$120,000', address: 'New York, Dallas' },
-  { id: '2', jobTitle: 'UI/UX Designer', companyName: 'Creative Inc', salary: '$90,000', address: 'New York, Dallas' },
-  { id: '3', jobTitle: 'Project Manager', companyName: 'Innovative Solutions', salary: '$110,000', address: 'New York, Dallas' },
+  {
+    id: '1',
+    jobTitle: 'Software Engineer',
+    companyName: 'Tech Corp',
+    salary: '$120,000',
+    address: 'New York, Dallas',
+  },
+  {
+    id: '2',
+    jobTitle: 'UI/UX Designer',
+    companyName: 'Creative Inc',
+    salary: '$90,000',
+    address: 'New York, Dallas',
+  },
+  {
+    id: '3',
+    jobTitle: 'Project Manager',
+    companyName: 'Innovative Solutions',
+    salary: '$110,000',
+    address: 'New York, Dallas',
+  },
 ];
 
 // User information
@@ -19,7 +44,7 @@ const user = {
   imageUrl: profileImage, // Use the imported image
 };
 
-const HomePage = () => {
+const EmployeeHomeScreen = () => {
   const [searchQuery, setSearchQuery] = React.useState('');
 
   // Function to filter job applications based on the search query
@@ -28,9 +53,10 @@ const HomePage = () => {
       return recentApplications; // Return all items if no search query
     }
 
-    return recentApplications.filter(item =>
-      item.jobTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.companyName.toLowerCase().includes(searchQuery.toLowerCase())
+    return recentApplications.filter(
+      item =>
+        item.jobTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.companyName.toLowerCase().includes(searchQuery.toLowerCase()),
     );
   };
 
@@ -52,8 +78,8 @@ const HomePage = () => {
 
         <FlatList
           data={filterApplications()} // Use the filtered list
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
+          keyExtractor={item => item.id}
+          renderItem={({item}) => (
             <JobCard
               jobTitle={item.jobTitle}
               companyName={item.companyName}
@@ -97,11 +123,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 8,
   },
-  Searchbar:{
+  Searchbar: {
     marginBottom: 20,
     marginTop: 10,
-    width: "100%"
-  }
+    width: '100%',
+  },
 });
 
-export default HomePage;
+export default EmployeeHomeScreen;

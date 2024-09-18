@@ -235,9 +235,11 @@ export default function SignUp() {
               />
             </View>
 
-            <View style={styles.subheader}>
-              <Text style={styles.subheadertitle}>{form.role} details</Text>
-            </View>
+            {form.role.length && (
+              <View style={styles.subheader}>
+                <Text style={styles.subheadertitle}>{form.role} details</Text>
+              </View>
+            )}
 
             {form.role === 'employee' && (
               <>

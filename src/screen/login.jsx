@@ -16,7 +16,7 @@ import {useNavigation} from '@react-navigation/native';
 import config from '../utils/config';
 import axios from 'axios';
 
-export default function Example() {
+export default function Login() {
   const [form, setForm] = useState({
     email: '',
     password: '',
@@ -25,6 +25,7 @@ export default function Example() {
 
   const handleLogin = async () => {
     const loginUrl = config.apiBaseUrl + '/auth/login';
+    console.log(loginUrl);
 
     if (!form.email || !form.password) {
       Alert.alert('Error', 'Please fill in all fields.');
@@ -45,9 +46,9 @@ export default function Example() {
       if (role === 'Admin') {
         navigation.navigate('AdminScreen');
       } else if (role === 'employee') {
-        navigation.navigate('EmployeeScreen');
+        navigation.navigate('MainScreen');
       } else if (role === 'employer') {
-        navigation.navigate('EmployerScreen');
+        navigation.navigate('MainScreen');
       } else {
         Alert.alert('Error', 'Invalid role.');
       }
