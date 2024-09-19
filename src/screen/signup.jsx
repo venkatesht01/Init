@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   SafeAreaView,
@@ -7,12 +7,10 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
-  Picker,
 } from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {Dropdown} from 'react-native-element-dropdown';
-import {useNavigation} from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { Dropdown } from 'react-native-element-dropdown';
+import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import config from '../utils/config';
 
@@ -20,9 +18,10 @@ export default function SignUp() {
   const navigation = useNavigation();
 
   const roles = [
-    {label: 'Employer Account', value: 'employer'},
-    {label: 'Employee Account', value: 'employee'},
+    { label: 'Employer Account', value: 'employer' },
+    { label: 'Employee Account', value: 'employee' },
   ];
+  
   const [form, setForm] = useState({
     firstName: '',
     password: '',
@@ -43,8 +42,9 @@ export default function SignUp() {
   });
 
   const handleSignUp = async () => {
-    const signUpUrl = config.apiBaseUrl + '/auth/register';
+    const signUpUrl = `${config.apiBaseUrl}/auth/register`;
     console.log(form);
+    
     if (
       !form.firstName ||
       !form.lastName ||
@@ -66,14 +66,13 @@ export default function SignUp() {
       const response = await axios.post(signUpUrl, form);
       Alert.alert('Success', 'Sign up successful');
       navigation.navigate('Login');
-      // Optionally, navigate to login or another screen
     } catch (error) {
       Alert.alert('Error', error?.response?.data || 'Sign up failed');
     }
   };
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#e8ecf4'}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#e8ecf4' }}>
       <View style={styles.container}>
         <KeyboardAwareScrollView>
           <View style={styles.header}>
@@ -90,7 +89,7 @@ export default function SignUp() {
                 <TextInput
                   autoCapitalize="words"
                   autoCorrect={false}
-                  onChangeText={firstName => setForm({...form, firstName})}
+                  onChangeText={firstName => setForm({ ...form, firstName })}
                   placeholder="John"
                   placeholderTextColor="#6b7280"
                   style={styles.inputControl}
@@ -102,7 +101,7 @@ export default function SignUp() {
                 <TextInput
                   autoCapitalize="words"
                   autoCorrect={false}
-                  onChangeText={lastName => setForm({...form, lastName})}
+                  onChangeText={lastName => setForm({ ...form, lastName })}
                   placeholder="Doe"
                   placeholderTextColor="#6b7280"
                   style={styles.inputControl}
@@ -117,7 +116,7 @@ export default function SignUp() {
                 autoCapitalize="none"
                 autoCorrect={false}
                 keyboardType="email-address"
-                onChangeText={email => setForm({...form, email})}
+                onChangeText={email => setForm({ ...form, email })}
                 placeholder="john@example.com"
                 placeholderTextColor="#6b7280"
                 style={styles.inputControl}
@@ -127,11 +126,10 @@ export default function SignUp() {
 
             <View style={styles.input}>
               <Text style={styles.inputLabel}>Password</Text>
-
               <TextInput
                 autoCorrect={false}
                 clearButtonMode="while-editing"
-                onChangeText={password => setForm({...form, password})}
+                onChangeText={password => setForm({ ...form, password })}
                 placeholder="********"
                 placeholderTextColor="#6b7280"
                 style={styles.inputControl}
@@ -148,7 +146,7 @@ export default function SignUp() {
               <Text style={styles.inputLabel}>Address Line 1</Text>
               <TextInput
                 autoCorrect={false}
-                onChangeText={address1 => setForm({...form, address1})}
+                onChangeText={address1 => setForm({ ...form, address1 })}
                 placeholder="123 Main St"
                 placeholderTextColor="#6b7280"
                 style={styles.inputControl}
@@ -160,7 +158,7 @@ export default function SignUp() {
               <Text style={styles.inputLabel}>Address Line 2</Text>
               <TextInput
                 autoCorrect={false}
-                onChangeText={address2 => setForm({...form, address2})}
+                onChangeText={address2 => setForm({ ...form, address2 })}
                 placeholder="Apt 4B"
                 placeholderTextColor="#6b7280"
                 style={styles.inputControl}
@@ -172,7 +170,7 @@ export default function SignUp() {
               <Text style={styles.inputLabel}>Town</Text>
               <TextInput
                 autoCorrect={false}
-                onChangeText={town => setForm({...form, town})}
+                onChangeText={town => setForm({ ...form, town })}
                 placeholder="Springfield"
                 placeholderTextColor="#6b7280"
                 style={styles.inputControl}
@@ -184,7 +182,7 @@ export default function SignUp() {
               <Text style={styles.inputLabel}>Country</Text>
               <TextInput
                 autoCorrect={false}
-                onChangeText={country => setForm({...form, country})}
+                onChangeText={country => setForm({ ...form, country })}
                 placeholder="USA"
                 placeholderTextColor="#6b7280"
                 style={styles.inputControl}
@@ -196,7 +194,7 @@ export default function SignUp() {
               <Text style={styles.inputLabel}>Postcode</Text>
               <TextInput
                 autoCorrect={false}
-                onChangeText={postcode => setForm({...form, postcode})}
+                onChangeText={postcode => setForm({ ...form, postcode })}
                 placeholder="12345"
                 placeholderTextColor="#6b7280"
                 style={styles.inputControl}
@@ -209,7 +207,7 @@ export default function SignUp() {
               <TextInput
                 autoCorrect={false}
                 keyboardType="phone-pad"
-                onChangeText={phone => setForm({...form, phone})}
+                onChangeText={phone => setForm({ ...form, phone })}
                 placeholder="+1 234 567 890"
                 placeholderTextColor="#6b7280"
                 style={styles.inputControl}
@@ -219,7 +217,6 @@ export default function SignUp() {
 
             <View style={styles.inputContainer}>
               <Text style={styles.inputLabel}>Role</Text>
-
               <Dropdown
                 data={roles}
                 labelField="label"
@@ -230,16 +227,16 @@ export default function SignUp() {
                 value={form.role}
                 onChange={itemValue => {
                   console.log(itemValue);
-                  setForm({...form, role: itemValue.value});
+                  setForm({ ...form, role: itemValue.value });
                 }}
               />
             </View>
 
-            {form.role.length && (
+            {form.role ? (
               <View style={styles.subheader}>
                 <Text style={styles.subheadertitle}>{form.role} details</Text>
               </View>
-            )}
+            ) : null}
 
             {form.role === 'employee' && (
               <>
@@ -247,7 +244,7 @@ export default function SignUp() {
                   <Text style={styles.inputLabel}>Employee ID</Text>
                   <TextInput
                     autoCorrect={false}
-                    onChangeText={employeeId => setForm({...form, employeeId})}
+                    onChangeText={employeeId => setForm({ ...form, employeeId })}
                     placeholder="E12345"
                     placeholderTextColor="#6b7280"
                     style={styles.inputControl}
@@ -259,7 +256,7 @@ export default function SignUp() {
                   <Text style={styles.inputLabel}>Passport Number</Text>
                   <TextInput
                     autoCorrect={false}
-                    onChangeText={passport => setForm({...form, passport})}
+                    onChangeText={passport => setForm({ ...form, passport })}
                     placeholder="P12345678"
                     placeholderTextColor="#6b7280"
                     style={styles.inputControl}
@@ -271,7 +268,7 @@ export default function SignUp() {
                   <Text style={styles.inputLabel}>BRP Number</Text>
                   <TextInput
                     autoCorrect={false}
-                    onChangeText={brp => setForm({...form, brp})}
+                    onChangeText={brp => setForm({ ...form, brp })}
                     placeholder="BRP12345678"
                     placeholderTextColor="#6b7280"
                     style={styles.inputControl}
@@ -287,9 +284,7 @@ export default function SignUp() {
                   <Text style={styles.inputLabel}>Company Name</Text>
                   <TextInput
                     autoCorrect={false}
-                    onChangeText={companyName =>
-                      setForm({...form, companyName})
-                    }
+                    onChangeText={companyName => setForm({ ...form, companyName })}
                     placeholder="Acme Corp"
                     placeholderTextColor="#6b7280"
                     style={styles.inputControl}
@@ -301,9 +296,7 @@ export default function SignUp() {
                   <Text style={styles.inputLabel}>Company Number</Text>
                   <TextInput
                     autoCorrect={false}
-                    onChangeText={companyNumber =>
-                      setForm({...form, companyNumber})
-                    }
+                    onChangeText={companyNumber => setForm({ ...form, companyNumber })}
                     placeholder="12345678"
                     placeholderTextColor="#6b7280"
                     style={styles.inputControl}
@@ -327,10 +320,11 @@ export default function SignUp() {
           onPress={() => {
             navigation.navigate('Login');
           }}
-          style={{marginTop: 'auto'}}>
+          style={{ marginTop: 'auto' }}
+        >
           <Text style={styles.formFooter}>
             Already have an account?{' '}
-            <Text style={{textDecorationLine: 'underline'}}>Sign In</Text>
+            <Text style={{ textDecorationLine: 'underline' }}>Sign In</Text>
           </Text>
         </TouchableOpacity>
       </View>
@@ -357,7 +351,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#929292',
   },
-  /** Header */
   header: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -373,7 +366,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#1D2A32',
   },
-  /** Form */
   form: {
     marginBottom: 24,
     paddingHorizontal: 24,
@@ -406,7 +398,6 @@ const styles = StyleSheet.create({
     color: '#222',
     borderWidth: 1,
     borderColor: '#C9D3DB',
-    borderStyle: 'solid',
   },
   picker: {
     height: 50,
@@ -426,7 +417,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     letterSpacing: 0.15,
   },
-  /** Button */
   btn: {
     flexDirection: 'row',
     alignItems: 'center',
