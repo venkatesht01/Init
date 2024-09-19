@@ -25,6 +25,7 @@ export default function Login() {
 
   const handleLogin = async () => {
     const loginUrl = config.apiBaseUrl + '/auth/login';
+    console.log(loginUrl);
 
     if (!form.email || !form.password) {
       Alert.alert('Error', 'Please fill in all fields.');
@@ -45,9 +46,9 @@ export default function Login() {
       if (role === 'Admin') {
         navigation.navigate('AdminScreen');
       } else if (role === 'employee') {
-        navigation.navigate('EmployeeScreen');
+        navigation.navigate('MainScreen');
       } else if (role === 'employer') {
-        navigation.navigate('EmployerScreen');
+        navigation.navigate('MainScreen');
       } else {
         Alert.alert('Error', 'Invalid role.');
       }
