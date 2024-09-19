@@ -7,11 +7,12 @@ import {
   StyleSheet,
   SafeAreaView,
 } from 'react-native';
-import JobCard from '../components/JobCard';
+import JobCard from '../../components/JobCard';
 import {Searchbar} from 'react-native-paper';
+import JobDetailsModal from '../../components/JobDetails';
 
 // Import the local image
-import profileImage from '../images/profile.png';
+import profileImage from '../../images/profile.png';
 
 // Sample data for recent job applications
 const recentApplications = [
@@ -21,6 +22,8 @@ const recentApplications = [
     companyName: 'Tech Corp',
     salary: '$120,000',
     address: 'New York, Dallas',
+    location: 'San Francisco, CA',
+    description: 'As a product manager, you will lead the development...',
   },
   {
     id: '2',
@@ -28,6 +31,8 @@ const recentApplications = [
     companyName: 'Creative Inc',
     salary: '$90,000',
     address: 'New York, Dallas',
+    location: 'San Francisco, CA',
+    description: 'As a product manager, you will lead the development...',
   },
   {
     id: '3',
@@ -35,6 +40,8 @@ const recentApplications = [
     companyName: 'Innovative Solutions',
     salary: '$110,000',
     address: 'New York, Dallas',
+    location: 'San Francisco, CA',
+    description: 'As a product manager, you will lead the development...',
   },
 ];
 
@@ -46,6 +53,19 @@ const user = {
 
 const EmployeeHomeScreen = () => {
   const [searchQuery, setSearchQuery] = React.useState('');
+  const [selectedJob, setSelectedJob] = React.useState(null);
+  const [modalVisible, setModalVisible] = React.useState(false);
+
+  const handleCardPress = (job) => {
+    console.log('sd');
+    setSelectedJob(job);
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+    setSelectedJob(null);
+  };
 
   // Function to filter job applications based on the search query
   const filterApplications = () => {
@@ -81,6 +101,8 @@ const EmployeeHomeScreen = () => {
           keyExtractor={item => item.id}
           renderItem={({item}) => (
             <JobCard
+              job={item}
+              onPress={() => handleCardPress(item)}
               jobTitle={item.jobTitle}
               companyName={item.companyName}
               salary={item.salary}
@@ -88,6 +110,14 @@ const EmployeeHomeScreen = () => {
             />
           )}
         />
+
+        {selectedJob && (
+          <JobDetailsModal
+            visible={modalVisible}
+            job={selectedJob}
+            onClose={closeModal}
+         />
+      )}
       </View>
     </SafeAreaView>
   );

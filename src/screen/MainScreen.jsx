@@ -13,13 +13,13 @@ import {
 import Icon, {Icons} from '../components/Icons';
 import * as Animatable from 'react-native-animatable';
 import Colors from '../constants/Colors';
-import Login from './Login';
+import Login from './login';
 import Search from './Search';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {jwtDecode} from 'jwt-decode';
-import EmployerHomeScreen from './EmployerHomeScreen';
+import EmployerHomeScreen from './employer/HomeScreen';
 import JobPosting from './JobPosting';
-import EmployeeHomeScreen from './EmployeeHomeScreen';
+import EmployeeHomeScreen from './employee/HomeScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -83,7 +83,7 @@ const TabButton = props => {
 const MainScreen = () => {
   useEffect(() => {
     assignScreens();
-  });
+  },[]);
   const [tabArr, setTabArr] = useState([
     {
       route: 'Home',

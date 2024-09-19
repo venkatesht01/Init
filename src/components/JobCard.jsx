@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const JobCard = ({ jobTitle, companyName, salary, address }) => {
+const JobCard = ({ jobTitle, companyName, salary, address, onPress }) => {
   return (
+    <TouchableOpacity onPress={onPress}>
     <View style={styles.card}>
       <View style={styles.content}>
         <View style={styles.header}>
@@ -20,6 +21,7 @@ const JobCard = ({ jobTitle, companyName, salary, address }) => {
         </View>
       </View>
     </View>
+    </TouchableOpacity>
   );
 };
 
