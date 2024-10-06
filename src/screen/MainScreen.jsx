@@ -14,12 +14,12 @@ import Icon, {Icons} from '../components/Icons';
 import * as Animatable from 'react-native-animatable';
 import Colors from '../constants/Colors';
 import Login from './login';
-import Search from './Search';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {jwtDecode} from 'jwt-decode';
 import EmployerHomeScreen from './employer/HomeScreen';
-import JobPosting from './JobPosting';
 import EmployeeHomeScreen from './employee/HomeScreen';
+import ProfileScreen from './ProfileScreen';
+import SearchScreen from './employer/SearchScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -99,18 +99,18 @@ const MainScreen = () => {
       label: 'Search',
       type: Icons.Feather,
       icon: 'search',
-      component: Search,
+      component: SearchScreen,
       color: Colors.green,
       alphaClr: Colors.greenAlpha,
     },
     {
       route: 'Add',
-      label: 'Add New',
+      label: 'Profile',
       type: Icons.Feather,
-      icon: 'plus-square',
-      component: Login,
+      icon: 'user',
+      component: ProfileScreen,
       color: Colors.red,
-      alphaClr: Colors.redAlpha,
+      alphaClr: Colors.greenAlpha,
     },
   ]);
 
@@ -135,18 +135,18 @@ const MainScreen = () => {
           label: 'Search',
           type: Icons.Feather,
           icon: 'search',
-          component: Search,
+          component: SearchScreen,
           color: Colors.green,
           alphaClr: Colors.greenAlpha,
         },
         {
           route: 'Add',
-          label: 'Add New',
+          label: 'Profile',
           type: Icons.Feather,
-          icon: 'plus-square',
-          component: JobPosting,
+          icon: 'user',
+          component: ProfileScreen,
           color: Colors.red,
-          alphaClr: Colors.redAlpha,
+          alphaClr: Colors.greenAlpha,
         },
       ]);
     } else if (role == 'employee') {
@@ -165,18 +165,18 @@ const MainScreen = () => {
           label: 'Search',
           type: Icons.Feather,
           icon: 'search',
-          component: Search,
+          component: SearchScreen,
           color: Colors.green,
           alphaClr: Colors.greenAlpha,
         },
         {
           route: 'Add',
-          label: 'Add New',
+          label: 'Profile',
           type: Icons.Feather,
-          icon: 'plus-square',
-          component: JobPosting,
+          icon: 'user',
+          component: ProfileScreen,
           color: Colors.red,
-          alphaClr: Colors.redAlpha,
+          alphaClr: Colors.greenAlpha,
         },
       ]);
     }
@@ -224,17 +224,5 @@ const styles = StyleSheet.create({
     borderRadius: 16,
   },
 });
-
-// const handleLogout = async () => {
-//   try {
-//     // Remove the token from storage
-//     await AsyncStorage.removeItem('userToken');
-//     // Navigate to login screen after logout
-//     navigation.navigate('Login');
-//   } catch (error) {
-//     Alert.alert('Error', 'Failed to log out');
-//     console.error(error);
-//   }
-// };
 
 export default MainScreen;

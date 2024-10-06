@@ -1,26 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const JobCard = ({ jobTitle, companyName, salary, address, onPress }) => {
+  const [pressed, setPressed] = useState(false);
+
   return (
-    <TouchableOpacity onPress={onPress}>
-    <View style={styles.card}>
-      <View style={styles.content}>
-        <View style={styles.header}>
-          <Icon name="work" size={48} color="#9A9A9A" style={styles.icon} />
-          <View style={styles.textContainer}>
-            <Text style={styles.jobTitle}>{jobTitle}</Text>
-            <Text style={styles.companyName}>{companyName}</Text>
+    <TouchableOpacity
+      onPress={onPress}
+      onPressIn={() => setPressed(true)}
+      onPressOut={() => setPressed(false)}
+    >
+      <View style={[styles.card, pressed && styles.cardPressed]}>
+        <View style={styles.content}>
+          <View style={styles.header}>
+            <Icon name="work" size={48} color="#9A9A9A" style={styles.icon} />
+            <View style={styles.textContainer}>
+              <Text style={styles.jobTitle}>{jobTitle}</Text>
+              <Text style={styles.companyName}>{companyName}</Text>
+            </View>
+            <Icon name="bookmark" size={24} color="#9A9A9A" />
           </View>
-          <Icon name="bookmark" size={24} color="#9A9A9A" />
-        </View>
-        <View style={styles.footer}>
-          <Text style={styles.address}>{address}</Text>
-          <Text style={styles.salary}>{salary}</Text>
+          <View style={styles.footer}>
+            <Text style={styles.address}>{address}</Text>
+            <Text style={styles.salary}>{salary}</Text>
+          </View>
         </View>
       </View>
-    </View>
     </TouchableOpacity>
   );
 };
@@ -36,9 +42,14 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 10,
+    elevation: 5,
     borderWidth: 1,
     borderColor: '#D0D0D0',
+  },
+  cardPressed: {
+    // Change opacity when pressed
+    borderColor: 'blue',
+    backgroundColor: 'grey' // Change border color to indicate press
   },
   header: {
     flexDirection: 'row',

@@ -25,7 +25,7 @@ export default function SignUp() {
   const [form, setForm] = useState({
     firstName: '',
     password: '',
-    lastName: '',
+    userName: '',
     address1: '',
     address2: '',
     town: '',
@@ -47,7 +47,7 @@ export default function SignUp() {
     
     if (
       !form.firstName ||
-      !form.lastName ||
+      !form.userName ||
       !form.address1 ||
       !form.town ||
       !form.country ||
@@ -101,11 +101,11 @@ export default function SignUp() {
                 <TextInput
                   autoCapitalize="words"
                   autoCorrect={false}
-                  onChangeText={lastName => setForm({ ...form, lastName })}
+                  onChangeText={userName => setForm({ ...form, userName })}
                   placeholder="Doe"
                   placeholderTextColor="#6b7280"
                   style={styles.inputControl}
-                  value={form.lastName}
+                  value={form.userName}
                 />
               </View>
             </View>
