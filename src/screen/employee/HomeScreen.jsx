@@ -8,7 +8,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import JobCard from '../../components/JobCard';
-import {Searchbar} from 'react-native-paper';
+import { Searchbar } from 'react-native-paper';
 import JobDetailsModal from '../../components/JobDetails';
 
 // Import the local image
@@ -48,7 +48,7 @@ const recentApplications = [
 // User information
 const user = {
   name: 'John Doe',
-  imageUrl: profileImage, // Use the imported image
+  imageUrl: profileImage,
 };
 
 const EmployeeHomeScreen = () => {
@@ -57,7 +57,6 @@ const EmployeeHomeScreen = () => {
   const [modalVisible, setModalVisible] = React.useState(false);
 
   const handleCardPress = (job) => {
-    console.log('sd');
     setSelectedJob(job);
     setModalVisible(true);
   };
@@ -70,7 +69,7 @@ const EmployeeHomeScreen = () => {
   // Function to filter job applications based on the search query
   const filterApplications = () => {
     if (!searchQuery) {
-      return recentApplications; // Return all items if no search query
+      return recentApplications;
     }
 
     return recentApplications.filter(
@@ -97,9 +96,9 @@ const EmployeeHomeScreen = () => {
         />
 
         <FlatList
-          data={filterApplications()} // Use the filtered list
+          data={filterApplications()}
           keyExtractor={item => item.id}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <JobCard
               job={item}
               onPress={() => handleCardPress(item)}
@@ -116,8 +115,8 @@ const EmployeeHomeScreen = () => {
             visible={modalVisible}
             job={selectedJob}
             onClose={closeModal}
-         />
-      )}
+          />
+        )}
       </View>
     </SafeAreaView>
   );
